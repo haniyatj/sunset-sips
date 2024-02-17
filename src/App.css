@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: "retro";
+  src: url("./fonts/retro.ttf") format("truetype");
+
+  font-family: "retroca";
+  src: url("./fonts/retroca.ttf") format("truetype");
+
+  font-family: "stre";
+  src: url("./fonts/stre.otf") format("opentype");
+
+  font-family: "Vilaka";
+  src: url("./fonts/Vilaka.ttf") format("truetype");
+
+  font-family: "dream";
+  src: url("./fonts/dream.ttf") format("truetype");
+
+}
