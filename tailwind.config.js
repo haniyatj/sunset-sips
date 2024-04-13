@@ -11,10 +11,10 @@ module.exports = {
         'dream': ['dream'],
         
        'quick': ["Quicksand", 'sans-serif'],
-    'dm': ["DM Serif Text"]
+        'dm': ["DM Serif Text"],
 
-
-
+        'Soria': ["Soria", 'sans-serif'],
+        'Neue': ["Neue", 'sans-serif'],
 
 
       }

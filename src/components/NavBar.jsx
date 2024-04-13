@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const Background = {
@@ -32,6 +33,7 @@ const NavBar = () => {
       </div>
 
       <div>
+        <Link to='/cart'>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -44,6 +46,7 @@ const NavBar = () => {
             clipRule="evenodd"
           />
         </svg>
+        </Link>
       </div>
     </nav>
   );

@@ -53,4 +53,11 @@
   font-family: "dream";
   src: url("./fonts/dream.ttf") format("truetype");
 
+  font-family: "soria";
+  src: url("./fonts/soria.ttf") format("truetype");
+
+  font-family: "Neue";
+  src: url("./fonts/Neue.ttf") format("truetype");
+
+
 }
