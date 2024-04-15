@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import ProductModal from "../components/Product";
 import useCartStore from '../stores/cartStore';
+import './styles.css'
+import Swup from 'swup';
+
 
 const HomePage = () => {
   const [showDrinks, setShowDrinks] = useState(true); // State to track if Drinks section should be displayed
@@ -9,9 +12,10 @@ const HomePage = () => {
   const [showSeasonal, setShowSeasonal] = useState(true);
   const [showDeserts, setShowDeserts] = useState(true);
   const addToCart = useCartStore((state) => state.addToCart);
-
-
   const [menu, setMenu] = useState([]);
+
+  const swup = new Swup();
+
 
   const fetchData = async (category) => {
     try {
@@ -52,13 +56,18 @@ const HomePage = () => {
   };
 
   const handleProductClick = (product) => {
-    setSelectedProduct(product);
+
+    const productWithQuantity = {
+      ...product,
+      quantity: 1 // Initializing quantity to 1
+    };
+    setSelectedProduct(productWithQuantity);
      // Set the selected product when clicked
-     addToCart(product);
+     addToCart(productWithQuantity);
    // onClose(); 
   };
   return (
-    <div>
+    <div id='swup' className="transition-fade">
       <NavBar />
       <div style={Background} className="h-80">
         <div className="flex items-center justify-center">

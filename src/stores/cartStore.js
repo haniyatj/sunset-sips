@@ -5,7 +5,7 @@ const useCartStore = create((set) => ({
   addToCart: (product) => set((state) => ({ cart: [...state.cart, product] })),
   removeFromCart: (productId) =>
     set((state) => ({
-      cart: state.cart.filter((item) => item.id !== productId),
+      cart: state.cart.filter((item) => item._id !== productId),
     })),
 }));
 

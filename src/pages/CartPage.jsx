@@ -3,16 +3,23 @@ import { Link } from 'react-router-dom';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import useCartStore from '../stores/cartStore';
+import './styles.css'; 
 
 function CartPage() {
+
+  const apiUrl = "http://localhost:3001";
 
   const [cart, setCart] = useState([]);
   const  removeFromCart = useCartStore((state) => state. removeFromCart);
 
   const [quantities, setQuantities] = useState(cart.map(item => 1)); // Initialize all quantities to 1
 
+  
+
+
   const  makePayment= async()=>
   {
+    console.log('sendnng',cart)
     const stripe=await loadStripe("pk_test_51OtZKOEMgOiIuLB0FggBF1rko43TmGfKTIwVn7RUWmD9uwB2s2ZjRW5zYwkWQVaLUEMiyREvTPl87LSvHIFNPY2600a7oTf8bX")
     const body=
     {
@@ -23,57 +30,97 @@ function CartPage() {
       "Content-Type":"application/json"
 
     }
-    const reponse =await fetch (`${apiUrl}/create-checkout-session`,{
+    const response =await fetch (`${apiUrl}/menu/create-checkout-session`,{
       method:"POST",
       headers:headers,
       body:JSON.stringify(body)
     })
-    const session=await Response.json();
-    const result=stripe.redirectToCheckout(
+    const session=await response.json();
+    console.log ('session is',session)
+    const { sessionId } = session;
+    const result= await stripe.redirectToCheckout(
       {
-        sessionId:session.id
+        sessionId:sessionId
       }
     );
+
+    // Check if redirection succeeded
+  if (result.error) {
+    // Handle redirection error
+    console.error("Redirection error:", result.error);
+  } else {
+    // Redirection succeeded, no need for further action
+    console.log("Redirection succeeded!");
+  }
     
   }
 
   useEffect(() => {
-    // Fetch cart items initially and set the state
     const initialCart = useCartStore.getState().cart;
-    setCart(initialCart);
+    setCart(initialCart)
+    setQuantities(initialCart.map(item => 1));
 
-    // Subscribe to changes in the cart
-    const unsubscribe = useCartStore.subscribe(
-      (newCart) => setCart(newCart),
-      (state) => state.cart
-    );
 
-    // Unsubscribe from the store on component unmount
-    return () => unsubscribe();
-  }, []);
+  console.log("nicee" ,initialCart)
+
+
+  console.log ('woww')
+  // Subscribe to changes in the cart
+  const unsubscribe = useCartStore.subscribe(
+    (newCart) => {
+       if (Array.isArray(newCart)) {
+        setCart(newCart);
+        // Update quantities when cart changes
+        setQuantities(newCart.map(item => 1));
+      }
+    },
+    (state) => state.cart
+  );
+
+  // Unsubscribe from the store on component unmount
+  return () => unsubscribe();
+  }, [removeFromCart]);
 
   const increaseQuantity = (index) => {
+    const initialCart = useCartStore.getState().cart;
+
     const newQuantities = [...quantities];
     newQuantities[index] += 1;
     setQuantities(newQuantities);
+    updateCartQuantity(index, newQuantities[index]);
+    console.log("lesgo" ,initialCart)
+
+
   };
 
   const decreaseQuantity = (index) => {
     const newQuantities = [...quantities];
+
     if (newQuantities[index] > 1) {
       newQuantities[index] -= 1;
       setQuantities(newQuantities);
+      updateCartQuantity(index, newQuantities[index]);
+
     }
   };
 
+  const updateCartQuantity = (index, newQuantity) => {
+    
+    const updatedCart = [...cart];
+    updatedCart[index].quantity = newQuantity;
+    setCart(updatedCart);
+  };
   const deleteItem = (productID) =>
   {
+    console.log(productID)
     removeFromCart(productID)
+     // Update the cart state with the updated cart
+  setCart(prevCart => prevCart.filter(item => item._id !== productID));
   }
 
   
   return (
-    <div style={{ backgroundColor: "white" }} className="w-screen h-screen ">
+    <div style={{ backgroundColor: "white" }} >
       <div className="ml-10 mr-10 mt-8">
         <h1 className="text-xl font-dm mb-4">Your Cart</h1>
         <div className="bg-white shadow-md rounded my-6">
@@ -99,7 +146,7 @@ function CartPage() {
                   </td>
                   <td className="py-3 px-6 text-center">${(item.price * quantities[index]).toFixed(2)}</td>
                   <td className="py-3 px-6 text-center">
-                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => deleteItem(item.id)}>
+                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => deleteItem(item._id)}>
                       Remove
                     </button>
                   </td>
@@ -113,7 +160,7 @@ function CartPage() {
         </div>
         <Link to='/Payment'>
         <div className='flex justify-center py-16'>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-dm py-2 px-4 rounded">Checkout</button>
+          <button className="bg-red-500 hover:bg-red-700 text-white font-dm py-2 px-4 rounded" onClick={makePayment}>Checkout</button>
         </div>
        </Link>
       </div>
