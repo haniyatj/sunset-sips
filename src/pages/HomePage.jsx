@@ -1,9 +1,10 @@
+// HomePage.jsx
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import ProductModal from "../components/Product";
 import useCartStore from '../stores/cartStore';
 import './styles.css'
-import Swup from 'swup';
+import {motion as m} from "framer-motion"
 
 
 const HomePage = () => {
@@ -14,7 +15,6 @@ const HomePage = () => {
   const addToCart = useCartStore((state) => state.addToCart);
   const [menu, setMenu] = useState([]);
 
-  const swup = new Swup();
 
 
   const fetchData = async (category) => {
@@ -51,33 +51,27 @@ const HomePage = () => {
     setShowSeasonal(true); // Close Seasonal Menu when Deserts is clicked
   };
 
-  const Background = {
-    backgroundColor: "rgb(244,239,233)",
-  };
 
   const handleProductClick = (product) => {
 
-    const productWithQuantity = {
-      ...product,
-      quantity: 1 // Initializing quantity to 1
-    };
-    setSelectedProduct(productWithQuantity);
-     // Set the selected product when clicked
-     addToCart(productWithQuantity);
-   // onClose(); 
+    setSelectedProduct(product);
+
   };
   return (
-    <div id='swup' className="transition-fade">
+    <m.div initial={{y: " 100%"}} 
+    animate ={{y: "0%"}} 
+    transition={{duration:0.75 ,ease: "easeOut"}}
+    exit={{opaacity :1}}>
       <NavBar />
-      <div style={Background} className="h-80">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center flex-col h-120 bg-white  mb-14">
           <img
-            src="https://i.pinimg.com/564x/37/8d/80/378d805e106747dfc1ea688c247655e4.jpg"
-            className="w-90 h-80"
-            alt="placeholder"
-          />
+              src='/assets/images/sunsetlogo.png'      
+               className="w-120 h-80"
+           
+            />
+        
         </div>
-      </div>
+    
 
       <div
         style={{
@@ -86,7 +80,7 @@ const HomePage = () => {
           border: "2px solid rgb(224,124,158)",
         }}
         className="font-quick h-20 flex justify-center items-center cursor-pointer"
-        onClick={handleSeasonalClick}
+        onClick={handleSeasonalClick} 
       >
         <p className="text-xl text-white">Signature Deserts</p>
       </div>
@@ -198,7 +192,7 @@ const HomePage = () => {
           onClose={() => setSelectedProduct(null)}
         />
       )}
-    </div>
+    </m.div>
   );
 };
 

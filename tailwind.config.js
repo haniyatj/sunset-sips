@@ -15,12 +15,18 @@ module.exports = {
 
         'Soria': ["Soria", 'sans-serif'],
         'Neue': ["Neue", 'sans-serif'],
+        'league': ["League Spartan"],
 
-
-      }
+      },
+      colors: {
+        'my-clr': {
+          100: 'rgb(224,124,158)',
+        
+        },
     },
   },
   plugins: [],
 
+}
 }
 
