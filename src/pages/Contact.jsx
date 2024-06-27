@@ -27,8 +27,10 @@ const ContactUsPage = () => {
 
   return (
     <>
+    <div className="flex flex-col h-screen">
+
       <NavBar />
-      <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+      <div className="bg-gray-100  items-center justify-center">
         <div className="relative h-66 flex items-center justify-center w-full">
           <img
             src="https://static.wixstatic.com/media/c89a5d_f506d6f580a943efa37d85e4c1bd2ee2~mv2.jpg/v1/fill/w_1899,h_624,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/c89a5d_f506d6f580a943efa37d85e4c1bd2ee2~mv2.jpg"
@@ -99,6 +101,7 @@ const ContactUsPage = () => {
       <div className="bg-black py-4 text-center text-white font-league">
         Sunset Sips
       </div>
+    </div>
     </>
   );
 };

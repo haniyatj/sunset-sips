@@ -58,6 +58,7 @@ const HomePage = () => {
 
   };
   return (
+    <div className="flex flex-col h-screen">
     <m.div initial={{y: " 100%"}} 
     animate ={{y: "0%"}} 
     transition={{duration:0.75 ,ease: "easeOut"}}
@@ -72,7 +73,6 @@ const HomePage = () => {
         
         </div>
     
-
       <div
         style={{
           backgroundColor: "black",
@@ -193,6 +193,7 @@ const HomePage = () => {
         />
       )}
     </m.div>
+    </div>
   );
 };
 
