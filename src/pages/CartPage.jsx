@@ -162,8 +162,10 @@ function CartPage() {
             </tbody>
           </table>
           <div className="text-center mt-4">
-            <Link to='/Payment'>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pay ${cart.reduce((acc, item, index) => acc + item.price * quantities[index], 0).toFixed(2)}</button>
+            <Link to='/payment'>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={makePayment}>
+                Pay ${cart.reduce((acc, item, index) => acc + item.price * quantities[index], 0).toFixed(2)}
+              </button>
             </Link>
           </div>
         </div>

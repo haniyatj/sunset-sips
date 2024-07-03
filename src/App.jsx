@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
 import AboutPage from './pages/About';
 import ContactPage from './pages/Contact';
+import SucessPage from './pages/success';
 
 import { AnimatePresence } from 'framer-motion';
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/success" element={<SucessPage />} />
 
   
       </Routes>

@@ -6,6 +6,14 @@ const ProductModal = ({ product, onClose }) => {
   const addToCart = useCartStore((state) => state.addToCart);
   const [selectedProduct, setSelectedProduct] = useState(null); // State to track the selected product for the modal
 
+  useEffect(() => {
+    // Add overflow hidden to body when modal is opened
+    document.body.style.overflow = 'hidden';
+    // Cleanup function to reset overflow when modal is closed
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
   const handleProductClick = (product) => {
 
     const productWithQuantity = {
@@ -19,9 +27,9 @@ const ProductModal = ({ product, onClose }) => {
   };
 
   return (
-    <div className="fixed z-10 inset-0 overflow-y-auto">
+    <div className="fixed z-10 inset-0 ">
       <div className="flex items-center justify-center min-h-screen">
-        <div className="relative bg-white rounded-lg p-8">
+        <div className="absolute items-center bg-white rounded-lg p-8">
           <button onClick={onClose} className="absolute top-0 right-0 p-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
